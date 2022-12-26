@@ -76,7 +76,7 @@ public final class MessageUtils {
     public static List<String> applyColors(List<String> messages) {
         messages = new ArrayList<>(messages);
         for (int i = 0; i < messages.size(); i++) {
-            messages.set(i, messages.get(i));
+            messages.set(i, applyColors(messages.get(i)));
         }
         return messages;
     }
