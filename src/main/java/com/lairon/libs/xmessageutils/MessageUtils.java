@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,10 +74,24 @@ public final class MessageUtils {
     }
 
     public static List<String> applyColors(List<String> messages) {
+        messages = new ArrayList<>(messages);
         for (int i = 0; i < messages.size(); i++) {
-            messages.set(i, applyColors(messages.get(i)));
+            messages.set(i, messages.get(i));
         }
         return messages;
+    }
+
+    public static ItemStack applyColors(ItemStack item) {
+        item = item.clone();
+        if (item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta.hasDisplayName())
+                meta.setDisplayName(applyColors(meta.getDisplayName()));
+            if(meta.hasLore())
+                meta.setLore(applyColors(meta.getLore()));
+            item.setItemMeta(meta);
+        }
+        return item;
     }
 
     public static String applyPlaceholders(@NotNull String message, Map<String, @NotNull String> placeholders) {
